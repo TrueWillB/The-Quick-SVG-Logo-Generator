@@ -4,50 +4,62 @@ const inquirer = require("inquirer");
 
 const shapeChoiceArray = ["Circle", "Triangle", "Square"];
 
-//I decided to just use an object to store all of the prompts in order to make it easier to address all of the individual questions
-const promptQuestions = {
-  chooseShape: {
+//TODO: USE THE "WHEN" PROPERTY TO MAKE THE HEX COLOR PROMPTS ONLY APPEAR IF THE USER CHOOSES TO ENTER A HEX COLOR
+//TODO: MAKE ALL OF THE COLORS ONLY LOWERCASE SO THAT THE VALIDATION ISN'T CASE SENSITIVE
+const promptQuestions = [
+  {
     message: "Please choose a shape for your logo:",
     type: "list",
     choices: shapeChoiceArray,
     name: "shapeChoice",
   },
-  chooseShapeColor: {
+  {
     message:
       "Please choose a color for the shape in your logo. The color can be entered as a standard CSS color name or, if a specific hex value is desired, please enter the symbol'#':",
     type: "input",
     name: "shapeColor",
+    validate: (ans) => {
+      if (allColors.includes(ans) || ans === "#") {
+        return true;
+      } else {
+        return "Please enter a valid color name or '#' to enter a hex value.";
+      }
+    },
   },
-  enterShapeHexColor: {
+  {
     message:
       "Please enter the hex value for your desired color in the format 'ffffff':",
     type: "input",
     name: "shapeHexColor",
+    when: (ans) => ans.shapeColor === "#",
   },
-  enterLogoText: {
+  {
     message:
       "Please enter the text for your logo. Keep in mind that long entries may not fit in the logo:",
     type: "input",
     name: "logoText",
   },
-  chooseLogoTextColor: {
+  {
     message:
       "Please choose a color for the text in your logo. The color can be entered as a standard CSS color name or, if a specific hex value is desired, please enter the symbol'#'",
     type: "input",
     name: "logoTextColor",
   },
-  enterTextHexColor: {
+  {
     message:
       "Please enter the hex value for your desired color in the format 'ffffff':",
     type: "input",
     name: "textHexColor",
   },
-};
+];
 
 function init() {
   console.log(
     "\n\n\nWelcome to the Logo Generator!\n This program will guide you through the process of creating a quick and basic logo. Please answer the following prompts to get started:\n\n"
   );
+  inquirer.prompt(promptQuestions).then((answers) => {
+    console.log(answers);
+  });
 }
 
 //THERE MAYBE SOME KIND OF ISSUE WITHTHE INQUIRER VERSION THAT'S IN THE PACKAGE.JSON FILE, IF SO TRY THE ONE FROM THE ACTIVITIES
@@ -58,3 +70,26 @@ function init() {
 //create the prompt for the text that will be displayed and the color of the text
 //decide on font sizes
 init();
+
+// function promptUser() {
+//   inquirer.prompt({
+//     message: "Please enter your email",
+//     name: "email",
+//     type: "list",
+//     choices: shapeChoiceArray,
+//     default: () => {},
+//     validate: function (email) {
+//       valid = email == "Circle";
+
+//       if (valid) {
+//         console.log("Great job");
+//         return true;
+//       } else {
+//         console.log(".  Please enter a valid email");
+//         return false;
+//       }
+//     },
+//   });
+// }
+
+// promptUser();
