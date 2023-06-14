@@ -19,7 +19,7 @@ const promptQuestions = [
     type: "input",
     name: "shapeColor",
     validate: (ans) => {
-      if (allColors.includes(ans) || ans === "#") {
+      if (allColors.includes(ans.toLowerCase()) || ans === "#") {
         return true;
       } else {
         return "Please enter a valid color name or '#' to enter a hex value.";
