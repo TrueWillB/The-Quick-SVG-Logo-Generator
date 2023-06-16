@@ -35,6 +35,11 @@ You can contact me with questions in the following places:<br/>
 
 Github Profile: https://github.com/TrueWillB<br/>
 
+## Credits
+
+I used a list of standard CSS colors gathered by github user bobspace. The exact list I used to derive my list is here: https://gist.github.com/bobspace/2712980
+<br>His profile is here: https://github.com/bobspace/
+
 ## License
 
 This repo and all of its contents operate under MIT License. For details, please view the LICENSE file in the repository or click the badge: [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

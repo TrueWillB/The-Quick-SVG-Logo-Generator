@@ -4,8 +4,11 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 
 const shapeChoiceArray = ["Circle", "Triangle", "Square"];
-const hexValidate = /[\da-fA-F]{6}/;
+// This is the regex expression that is used to validate the hex color values.
+//It requires a '#' symbol followed by 6 characters that are either numbers or letters a-f
+const hexValidate = /#[\da-fA-F]{6}/;
 
+//This is the array storing all of the questions that the user is prompted with
 const promptQuestions = [
   {
     message:
@@ -75,6 +78,7 @@ const promptQuestions = [
   },
 ];
 
+//This is the main function that runs the program
 function init() {
   //These are two convenience variables used for building the svg
 
@@ -114,6 +118,7 @@ function init() {
     ).render();
 
     svgString += imageClose;
+    //Writes the SVG file with the svg info
     fs.writeFile("logo.svg", svgString, (err) => {
       err ? console.error(err) : console.log("Generated logo.svg");
     });
