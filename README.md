@@ -9,6 +9,7 @@
 - [Usage](#usage)
 - [Tests](#tests)
 - [Questions](#questions)
+- [Credits](#credits)
 - [License](#license)
 
 ## Description
