@@ -1,12 +1,27 @@
-const Shapes = require("./lib/shapes.js");
+const svgRender = require("./lib/renderers.js");
 const allColors = require("./lib/CSS_colors.js").allColors; //I put the list of all colors in a separate file for less clutter in index.js
 const inquirer = require("inquirer");
+const fs = require("fs");
 
 const shapeChoiceArray = ["Circle", "Triangle", "Square"];
+const hexValidate = /[\da-fA-F]{6}/;
 
-//TODO: USE THE "WHEN" PROPERTY TO MAKE THE HEX COLOR PROMPTS ONLY APPEAR IF THE USER CHOOSES TO ENTER A HEX COLOR
-//TODO: MAKE ALL OF THE COLORS ONLY LOWERCASE SO THAT THE VALIDATION ISN'T CASE SENSITIVE
 const promptQuestions = [
+  {
+    message:
+      "Please choose a color for your logo background.\nThe color can be entered as a standard CSS color name or, if a specific hex value is desired, please enter the value in the form '#ffffff'.\nIf a transparent background is desired, please leave this entry blank:",
+    type: "input",
+    name: "backGroundColorChoice",
+    validate: (ans) => {
+      //This validates that the color typed is a valid CSS color name or a # symbol
+      ans = ans.toLowerCase();
+      if (allColors.includes(ans) || hexValidate.test(ans) || ans === "") {
+        return true;
+      } else {
+        return "Please enter a valid color name or hex value in the form #ffffff, or leave this entry blank for a transparent background";
+      }
+    },
+  },
   {
     message: "Please choose a shape for your logo:",
     type: "list",
@@ -15,50 +30,95 @@ const promptQuestions = [
   },
   {
     message:
-      "Please choose a color for the shape in your logo. The color can be entered as a standard CSS color name or, if a specific hex value is desired, please enter the symbol'#':",
+      "Please choose a color for the shape in your logo. The color can be entered as a standard CSS color name or, if a specific hex value is desired, please enter the value in the form '#ffffff':",
     type: "input",
     name: "shapeColor",
     validate: (ans) => {
-      if (allColors.includes(ans.toLowerCase()) || ans === "#") {
+      //This validates that the color typed is a valid CSS color name or a # symbol
+      ans = ans.toLowerCase();
+      if (allColors.includes(ans) || hexValidate.test(ans)) {
         return true;
       } else {
-        return "Please enter a valid color name or '#' to enter a hex value.";
+        return "Please enter a valid color name or hex value in the form #ffffff";
       }
     },
   },
   {
     message:
-      "Please enter the hex value for your desired color in the format 'ffffff':",
-    type: "input",
-    name: "shapeHexColor",
-    when: (ans) => ans.shapeColor === "#",
-  },
-  {
-    message:
-      "Please enter the text for your logo. Keep in mind that long entries may not fit in the logo:",
+      "Please enter the text for your logo. Works best with length of 10 or fewer characters:",
     type: "input",
     name: "logoText",
   },
   {
     message:
-      "Please choose a color for the text in your logo. The color can be entered as a standard CSS color name or, if a specific hex value is desired, please enter the symbol'#'",
+      "Please choose a color for the text in your logo. The color can be entered as a standard CSS color name or, if a specific hex value is desired, please enter the value in the form '#ffffff'",
     type: "input",
     name: "logoTextColor",
+    validate: (ans) => {
+      //This validates that the color typed is a valid CSS color name or a # symbol
+      ans = ans.toLowerCase();
+      if (allColors.includes(ans) || hexValidate.test(ans)) {
+        return true;
+      } else {
+        return "Please enter a valid color name or hex value in the form #ffffff";
+      }
+    },
   },
-  {
-    message:
-      "Please enter the hex value for your desired color in the format 'ffffff':",
-    type: "input",
-    name: "textHexColor",
-  },
+  // {
+  //   message:
+  //     "Please enter the hex value for your desired color in the format 'ffffff':",
+  //   type: "input",
+  //   name: "textHexColor",
+  // },
 ];
 
 function init() {
+  //These are two convenience variables used for building the svg
+
   console.log(
-    "\n\n\nWelcome to the Logo Generator!\n This program will guide you through the process of creating a quick and basic logo. Please answer the following prompts to get started:\n\n"
+    "\nWelcome to the Logo Generator!\n This program will guide you through the process of creating a quick and basic logo. Please answer the following prompts to get started:\n"
   );
   inquirer.prompt(promptQuestions).then((answers) => {
-    console.log(answers);
+    const imageOpen =
+      '<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">\n\n';
+    const imageClose = "\n\n</svg>";
+    const textRenderString = `  <text x="150" y="125" font-size="50" font-family="Brush Script MT" text-anchor="middle" fill="${answers.logoTextColor}"> ${answers.logoText}</text>`;
+    let svgString = imageOpen;
+
+    // console.log(answers);
+    //Checks if the user entered a background color and, if so, makes the background
+    if (answers.backGroundColorChoice !== "") {
+      svgString += new svgRender.BackgroundFill(
+        answers.backGroundColorChoice
+      ).render();
+    }
+
+    switch (answers.shapeChoice) {
+      case "Circle":
+        svgString += new svgRender.Circle(answers.shapeColor).render();
+        break;
+      case "Triangle":
+        svgString += new svgRender.Triangle(answers.shapeColor).render();
+        break;
+      case "Square":
+        svgString += new svgRender.Square(answers.shapeColor).render();
+        break;
+      default:
+        console.log("I don't know how you were able to choose nothing");
+    }
+
+    svgString += new svgRender.Text(
+      answers.logoTextColor,
+      answers.logoText
+    ).render();
+
+    svgString += imageClose;
+    // console.log(svgString);
+    fs.writeFile("output-logo.svg", svgString, (err) => {
+      err
+        ? console.error(err)
+        : console.log("output-logo.svg created successfully");
+    });
   });
 }
 
@@ -70,26 +130,3 @@ function init() {
 //create the prompt for the text that will be displayed and the color of the text
 //decide on font sizes
 init();
-
-// function promptUser() {
-//   inquirer.prompt({
-//     message: "Please enter your email",
-//     name: "email",
-//     type: "list",
-//     choices: shapeChoiceArray,
-//     default: () => {},
-//     validate: function (email) {
-//       valid = email == "Circle";
-
-//       if (valid) {
-//         console.log("Great job");
-//         return true;
-//       } else {
-//         console.log(".  Please enter a valid email");
-//         return false;
-//       }
-//     },
-//   });
-// }
-
-// promptUser();
