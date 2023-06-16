@@ -14,7 +14,7 @@
 ## Description
 
 This is a small and very simple SVG logo generator. It quickly generates a small svg file with a short amount of text, a square, triangle, or circle, and a background. All of these elements have their color chosen by the user.<br>
-![sample logo](./readMeAssets/output-logo.svg)
+![sample logo](./readMeAssets/sample.svg)
 
 ## Installation
 
