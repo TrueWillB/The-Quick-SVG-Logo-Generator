@@ -81,7 +81,7 @@ function init() {
   inquirer.prompt(promptQuestions).then((answers) => {
     const imageOpen =
       '<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">\n';
-    const imageClose = "\n</svg>";
+    const imageClose = "</svg>";
     let svgString = imageOpen;
 
     // console.log(answers);
