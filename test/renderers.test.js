@@ -8,7 +8,7 @@ describe("Renderers", () => {
       const color = "yellow";
       const circle = new Renderers.Circle(color);
       expect(circle.render()).toEqual(
-        '\n<circle cx=50% cy=50% r=30% fill="yellow" />\n'
+        '<circle cx="50%" cy="50%" r="30%" fill="yellow" />\n'
       );
     });
   });
@@ -18,7 +18,7 @@ describe("Renderers", () => {
       const color = "green";
       const circle = new Renderers.Triangle(color);
       expect(circle.render()).toEqual(
-        '\n<polygon points="150, 18 244, 182 56, 182" fill="green" />\n'
+        '<polygon points="150, 18 244, 182 56, 182" fill="green" />\n'
       );
     });
   });
@@ -28,7 +28,7 @@ describe("Renderers", () => {
       const color = "black";
       const circle = new Renderers.Square(color);
       expect(circle.render()).toEqual(
-        '\n<rect x="68" y="18" width="164" height="164" r="90" fill="black" />\n'
+        '<rect x="68" y="18" width="164" height="164" r="90" fill="black" />\n'
       );
     });
   });
@@ -39,7 +39,7 @@ describe("Renderers", () => {
       const text = "test text";
       const circle = new Renderers.Text(color, text);
       expect(circle.render()).toEqual(
-        '\n<text x="150" y="125" font-size="50" font-family="Brush Script MT" text-anchor="middle" fill="blue">test text</text>\n'
+        '<text x="150" y="125" font-size="50" font-family="Brush Script MT" text-anchor="middle" fill="blue">test text</text>\n'
       );
     });
   });
@@ -49,7 +49,7 @@ describe("Renderers", () => {
       const color = "magenta";
       const circle = new Renderers.BackgroundFill(color);
       expect(circle.render()).toEqual(
-        '\n<rect width=100% height=100% fill="magenta" />\n'
+        '<rect width="100%" height="100%" fill="magenta" />\n'
       );
     });
   });
