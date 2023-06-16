@@ -26,7 +26,7 @@ You can use this generator to quickly kick out some simple logos. It can be a go
 
 ## Tests
 
-Testing was rather simple, and tests can be found in the "test" folder of the repository. Testing consisted of ensuring that the outputs of the methods in the renderers.js file were correct.
+Testing was rather simple, and tests can be found in the "test" folder of the repository. Testing consisted of ensuring that the outputs of the methods in the renderers.js file were correct. To run the test, simply run npm test from the command line
 
 ## Questions
 
