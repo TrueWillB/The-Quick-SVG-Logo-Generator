@@ -73,12 +73,6 @@ const promptQuestions = [
       }
     },
   },
-  // {
-  //   message:
-  //     "Please enter the hex value for your desired color in the format 'ffffff':",
-  //   type: "input",
-  //   name: "textHexColor",
-  // },
 ];
 
 function init() {
@@ -93,7 +87,6 @@ function init() {
     const imageClose = "</svg>";
     let svgString = imageOpen;
 
-    // console.log(answers);
     //Checks if the user entered a background color and, if so, makes the background
     if (answers.backGroundColorChoice !== "") {
       svgString += new svgRender.BackgroundFill(
@@ -121,18 +114,10 @@ function init() {
     ).render();
 
     svgString += imageClose;
-    // console.log(svgString);
     fs.writeFile("logo.svg", svgString, (err) => {
       err ? console.error(err) : console.log("Generated logo.svg");
     });
   });
 }
 
-//THERE MAYBE SOME KIND OF ISSUE WITHTHE INQUIRER VERSION THAT'S IN THE PACKAGE.JSON FILE, IF SO TRY THE ONE FROM THE ACTIVITIES
-//todo finish circle class. Give it a render function that will write the shape into an svg format <circle>
-//do the same for triangle and square, but they are polygons
-//create the prompts to choose the shapes and colors(maybe do this first)
-//find list of all the color wrods for CSS
-//create the prompt for the text that will be displayed and the color of the text
-//decide on font sizes
 init();
