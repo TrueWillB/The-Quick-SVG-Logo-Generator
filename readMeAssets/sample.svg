@@ -1,5 +1,5 @@
 <svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">
 <rect width="100%" height="100%" fill="#fcdb1c" />
 <polygon points="150, 18 244, 182 56, 182" fill="#fb9ce3" />
-<text x="150" y="125" font-size="50" font-family="Brush Script MT" text-anchor="middle" fill="#6670dd">Your Logo SVG</text>
+<text x="150" y="125" font-size="60" font-family="Brush Script MT" text-anchor="middle" fill="#6670dd">SVG</text>
 </svg>

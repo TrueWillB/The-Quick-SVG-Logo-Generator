@@ -45,9 +45,18 @@ const promptQuestions = [
   },
   {
     message:
-      "Please enter the text for your logo. Works best with length of 10 or fewer characters:",
+      "Please enter the text for your logo. Up to 3 characters will be accepted:",
     type: "input",
     name: "logoText",
+    validate: (ans) => {
+      //This validates that the color typed is a valid CSS color name or a # symbol
+      ans = ans.toLowerCase();
+      if (ans.length <= 3) {
+        return true;
+      } else {
+        return "Please enter 3 characters or less";
+      }
+    },
   },
   {
     message:
@@ -113,10 +122,8 @@ function init() {
 
     svgString += imageClose;
     // console.log(svgString);
-    fs.writeFile("output-logo.svg", svgString, (err) => {
-      err
-        ? console.error(err)
-        : console.log("output-logo.svg created successfully");
+    fs.writeFile("logo.svg", svgString, (err) => {
+      err ? console.error(err) : console.log("Generated logo.svg");
     });
   });
 }

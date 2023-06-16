@@ -36,10 +36,10 @@ describe("Renderers", () => {
   describe("Text", () => {
     it("should take a string for text and a string for color and put output a text element with those properties in a string", () => {
       const color = "blue";
-      const text = "test text";
+      const text = "ABC";
       const circle = new Renderers.Text(color, text);
       expect(circle.render()).toEqual(
-        '<text x="150" y="125" font-size="50" font-family="Brush Script MT" text-anchor="middle" fill="blue">test text</text>\n'
+        '<text x="150" y="125" font-size="60" font-family="Brush Script MT" text-anchor="middle" fill="blue">ABC</text>\n'
       );
     });
   });
